@@ -1,0 +1,21 @@
+{% include "header.html" %}
+<h2> Are you sure you want to delete {{item.title}}? </h2>
+<form action="{{ url_for('deleteCatalogItem', item_id = item.id)}}" method = 'post'>
+		<a>Name:</a>
+		<input type ="text" maxlength="100" name="title" value="{{item.title }}">
+		<br>
+		<a>Description:</a>
+		<input type ="text" maxlength="100" name="description" value="{{item.description }}">
+		<br>
+		<label for="category">Category:</label>
+		{% for category in categories %}
+		<div class="radio">
+		  <label>
+			<input type="radio" name="category" value="{{category.name}}" {% if category.id == item.category_id %} checked {%endif%}>"{{category.name}}"
+		  </label>
+		</div>
+		{% endfor %}
+		<p><input type="submit" value = 'Delete'>
+			<a href = "{{url_for('showCategories')}}"><span>
+				<input type="button" value="Cancel"></span></a></p>
+</form>

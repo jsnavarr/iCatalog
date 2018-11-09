@@ -1,0 +1,9 @@
+{% include "header.html" %}
+<h2> Are you sure you want to delete {{category.name}}? </h2>
+<form action="{{ url_for('deleteCategory',category_id = category.id)}}" method = 'post'>
+	<a></a>
+	<p><input type="submit" value ='Delete'>
+		<a href = "{{url_for('showCategories')}}"><span>
+			<input type="button" value='Cancel'></span></a></p>
+</form>
+

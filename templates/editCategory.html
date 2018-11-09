@@ -1,0 +1,9 @@
+{% include "header.html" %}
+<h1>Edit {{category.name}}</h1>
+<form action="{{ url_for('editCategory',category_id = category.id)}}" method = "post">
+	<a>Name:</a>
+	<input type ="text" maxlength="100" name="name" value="{{category.name }}">
+	<p><input type="submit" value = 'Save'>
+		<a href = "{{url_for('showCategories')}}"><span>
+			<input type="button" value="Cancel"></span></a></p>
+</form>

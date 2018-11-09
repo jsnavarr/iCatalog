@@ -1,0 +1,22 @@
+{% include "header.html" %}
+	<h1>New Catalog Item</h1>
+	<form action="{{ url_for('newCatalogItem')}}" method = "post">
+			<a>Name:</a>
+			<input type ="text" maxlength="100" name="title" placeholder="catalog item title">
+			<br>
+			<a>Description:</a>
+			<input type ="text" maxlength="100" name="description" placeholder="catalog item description">
+			<p><input type="submit" value = 'Save'>
+				<a href = "{{url_for('showCategories')}}"><span>
+					<input type="button" value="Cancel"></span></a></p>
+			
+			<label for="category">Category:</label>
+			{% for category in categories %}
+			<div class="radio">
+				<label>
+					<input type="radio" name="category" value="{{category.name}}">"{{category.name}}"
+				</label>
+			</div>
+			{% endfor %}
+	</form>
+
