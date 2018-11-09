@@ -44,14 +44,14 @@ def catalogItemsJSON():
 #JSON APIs to view catalog items information for specific category
 @app.route('/category/<int:category_id>/item/JSON')
 def categoryCatalogItemJSON(category_id):
-    category = session.query(Category).filter_by(id = category_id).one()
+    category = session.query(Category).filter_by(id = category_id).first()
     items = session.query(CatalogItem).filter_by(category_id = category_id).all()
     return jsonify(categoryItems=[i.serialize for i in items])
 
 #JSON APIs to view catalog item Information
 @app.route('/category/item/<int:item_id>/JSON')
 def CatalogItemJSON(category_id, item_id):
-    item = session.query(CatalogItem).filter_by(id = item_id).one()
+    item = session.query(CatalogItem).filter_by(id = item_id).first()
     return jsonify(category_Item = item.serialize)
 
 #JSON APIs to view all catalog categories information
@@ -63,7 +63,7 @@ def CatalogCategoriesJSON():
 #JSON APIs to view catalog category information
 @app.route('/category/<int:category_id>/JSON')
 def CatalogCategoryJSON():
-    category = session.query(Category).one()
+    category = session.query(Category).first()
     return jsonify(category = category.serialize)
 
 #JSON APIs to view users information
@@ -75,7 +75,7 @@ def CatalogUsersJSON():
 #JSON APIs to view user information
 @app.route('/user/<int:user_id>/JSON')
 def CatalogUserJSON():
-    user = session.query(User).filter_by(id = user_id).one()
+    user = session.query(User).filter_by(id = user_id).first()
     return jsonify(user= user.serialize)
 
 
@@ -84,7 +84,8 @@ def CatalogUserJSON():
 @app.route('/category')
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
-    return render_template('categories.html', categories = categories)
+    items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
+    return render_template('categories.html', categories = categories, items = items)
 
 #Create a new catalog category
 @app.route('/category/new', methods=['GET','POST'])
@@ -101,7 +102,7 @@ def newCategory():
 #Edit a catalog category
 @app.route('/category/<int:category_id>/edit', methods = ['GET', 'POST'])
 def editCategory(category_id):
-    editedCategory = session.query(Category).filter_by(id = category_id).one()
+    editedCategory = session.query(Category).filter_by(id = category_id).first()
     if request.method == 'POST':
         if request.form['name']:
             editedCategory.name = request.form['name']
@@ -123,11 +124,17 @@ def deleteCategory(category_id):
     if request.method == 'GET':
         return render_template('deleteCategory.html',category = categoryToDelete)
 
+#Show catalog item details 
+@app.route('/category/item/<int:item_id>')
+def showCatalogItemDetails(item_id):
+    item = session.query(CatalogItem).filter_by(id = item_id).first()
+    return render_template('catalogItemDetails.html', item = item)
+
 #Show catalog items of a specific category
 @app.route('/category/<int:category_id>')
 @app.route('/category/<int:category_id>/item')
 def showCatalogItem(category_id):
-    category = session.query(Category).filter_by(id = category_id).one()
+    category = session.query(Category).filter_by(id = category_id).first()
     items = session.query(CatalogItem).filter_by(category_id = category_id).all()
     return render_template('catalogItem.html', items = items, category = category)
 
@@ -149,7 +156,7 @@ def newCatalogItem():
 #Edit a catalog item
 @app.route('/item/<int:item_id>/edit', methods=['GET','POST'])
 def editCatalogItem(item_id):
-    editedItem = session.query(CatalogItem).filter_by(id = item_id).one()
+    editedItem = session.query(CatalogItem).filter_by(id = item_id).first()
     categories = session.query(Category)
     if request.method == 'POST':
         if request.form['title']:

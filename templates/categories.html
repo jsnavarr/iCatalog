@@ -21,4 +21,11 @@
 			<h3>{{category.name}}</h3>
 		</a>
 	{% endfor %}
+	<h1>Catalog items</h1>
+	{% for item in items %}
+		<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">
+			<h3>{{item.title}}</h3>
+		</a>
+	{% endfor %}
+
 {% endblock %}
