@@ -1,0 +1,37 @@
+body {
+    margin:0;
+}
+.top_bar {
+    list-style-type: none;
+    width:100%;
+    display: block;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    background-color: navy;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    text-align: left;
+}
+
+.top_bar #top_bar_title {
+    float: left;
+    padding: 5px 50px;
+}
+
+.top_bar #login {
+    float: right;
+    border-left: 1px solid white;
+    background-color: green;
+    padding: 5px 25px;
+}
+
+.top_bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.top_bar #login:hover {
+    background-color:yellowgreen;
+    color: navy;
+}
