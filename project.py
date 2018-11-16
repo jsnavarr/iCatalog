@@ -78,14 +78,26 @@ def CatalogUserJSON():
     user = session.query(User).filter_by(id = user_id).first()
     return jsonify(user= user.serialize)
 
+# def getCategoriesWithItems():
+#     items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
+#     categories_with_items=[]
+#     for i in items:
+#         category = session.query(Category).filter_by(id=i.category_id).first()
+#         categories_with_items.append(category.name+'('+i.title+')')
+#     print categories_with_items
+#     return categories_with_items
+
+# def getCategoryName(category_id):
+#     return "luchas"
 
 #Show all catalog categories
 @app.route('/')
 @app.route('/category')
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
+    # categories_with_items = getCategoriesWithItems()
     items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
-    return render_template('categories.html', categories = categories, items = items)
+    return render_template('categories.html', categories = categories, items=items)
 
 #Create a new catalog category
 @app.route('/category/new', methods=['GET','POST'])
@@ -139,7 +151,7 @@ def showCatalogItem(category_id):
     return render_template('catalogItem.html', items = items, category = category)
 
 #Create a new catalog item
-@app.route('/item/new',methods=['GET','POST'])
+@app.route('/category/item/new',methods=['GET','POST'])
 def newCatalogItem():
     categories = session.query(Category)
     if request.method == 'POST':
@@ -154,7 +166,7 @@ def newCatalogItem():
       return render_template('newCatalogItem.html', categories = categories)
 
 #Edit a catalog item
-@app.route('/item/<int:item_id>/edit', methods=['GET','POST'])
+@app.route('/category/item/<int:item_id>/edit', methods=['GET','POST'])
 def editCatalogItem(item_id):
     editedItem = session.query(CatalogItem).filter_by(id = item_id).first()
     categories = session.query(Category)
@@ -175,7 +187,7 @@ def editCatalogItem(item_id):
 
 
 #Delete a catalog item
-@app.route('/item/<int:item_id>/delete', methods = ['GET','POST'])
+@app.route('/category/item/<int:item_id>/delete', methods = ['GET','POST'])
 def deleteCatalogItem(item_id):
     itemToDelete = session.query(CatalogItem).filter_by(id = item_id).first()
     categories = session.query(Category) 
