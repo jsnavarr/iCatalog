@@ -140,7 +140,8 @@ def deleteCategory(category_id):
 @app.route('/category/item/<int:item_id>')
 def showCatalogItemDetails(item_id):
     item = session.query(CatalogItem).filter_by(id = item_id).first()
-    return render_template('catalogItemDetails.html', item = item)
+    categories = session.query(Category)
+    return render_template('catalogItemDetails.html', item = item, categories=categories)
 
 #Show catalog items of a specific category
 @app.route('/category/<int:category_id>')
@@ -161,7 +162,7 @@ def newCatalogItem():
         session.add(newItem)
         session.commit()
         flash('New Category %s Item Successfully Created' % (newItem.title))
-        return redirect(url_for('showCatalogItem', category_id=category.id))
+        return redirect(url_for('showCategories'))
     if request.method == 'GET':
       return render_template('newCatalogItem.html', categories = categories)
 
@@ -181,7 +182,7 @@ def editCatalogItem(item_id):
         session.add(editedItem)
         session.commit() 
         flash('Catalog Item Successfully Edited')
-        return redirect(url_for('showCatalogItem', category_id=category.id))
+        return redirect(url_for('showCategories'))
     if request.method == 'GET':
         return render_template('editCatalogItem.html', item_id = item_id, item = editedItem, categories = categories)
 
@@ -196,7 +197,7 @@ def deleteCatalogItem(item_id):
         session.delete(itemToDelete)
         session.commit()
         flash('Category Item Successfully Deleted')
-        return redirect(url_for('showCatalogItem', category_id=category_id))
+        return redirect(url_for('showCategories'))
     if request.method == 'GET':
         return render_template('deleteCatalogItem.html', item = itemToDelete, categories = categories)
 

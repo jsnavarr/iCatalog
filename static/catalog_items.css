@@ -1,0 +1,53 @@
+.all_data {
+    width: 50%;
+    margin: 100px auto;
+}
+.item_details {
+    border: 2px solid rgb(248, 245, 245);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    background-color: rgb(111, 188, 240);   
+}
+
+.item_details .title {
+    color: navy;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px solid rgb(148, 112, 112);
+    border-left: 1px solid rgb(148, 112, 112);
+    background-color: rgb(155, 186, 192);
+    text-align: center;
+}
+.item_details input, textarea, select {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.item_details tr td{
+    padding: 10px 10px;
+    width: 20%;
+}
+
+.item_label {
+    text-align: right;
+}
+
+.buttons {
+    text-align: center;
+}
+.buttons button, input{
+    font-size: 16px;
+    margin: 20px 10px;
+}
+.buttons a{
+    text-decoration: none;
+}
+
+.delete_data {
+    background: red;
+    color: white;
+}
+
+
+

@@ -1,28 +1,39 @@
 {% include "header.html" %}
-			<h1>Catalog Item Details</h1>
-			<a>Name:</a>
-			<input type ="text" maxlength="100" name="title" value="{{item.title }}">
-			<br>
-			<a>Description:</a>
-			<input type ="text" maxlength="100" name="description" value="{{item.description }}">
-			<br>
-			<label for="category">Category:</label>
-			{% for category in categories %}
-			<div class="radio">
-				<label>
-					<input type="radio" name="category" value="{{category.name}}" {% if category.id == item.category_id %} checked {%endif%}>"{{category.name}}"
-				</label>
-			</div>
-			{% endfor %}
-
+	<div class="all_data">
+		<table class = "item_details">
+			<tr>
+				<th class = "title" colspan="2">Catalog Item Details</th>
+			</tr>
+			<tr>
+				<td class="item_label">Name:</td>
+				<td><input type ="text" maxlength="80" name="title" value="{{item.title }}" disabled></td>
+			</tr>
+			<tr>
+				<td class="item_label">Description:</td>
+				<td><textarea name="description" rows="4" cols="60" disabled>{{ item.description }}</textarea></td>
+			</tr>
+			<tr>
+				<td class="item_label">Category:</td>
+				<td>
+				<div class="dropdown">
+					<select name="category_list" size="4" disabled>
+					{% for category in categories %}
+						<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
+					{% endfor %}
+					</select>
+				</div>
+				</td>
+			</tr>
+		</table>
+		<div class="buttons">
 			<a href="{{url_for('editCatalogItem', item_id = item.id)}}">
-				<button class="btn btn-default" id="new-catalog-item">
-					<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Edit Catalog Item
-				</button>
+				<button >Edit</button>
 			</a>
+			<a href="{{url_for('deleteCatalogItem', item_id = item.id)}}">
+					<button >Delete</button>
+				</a>	
 			<a href="{{url_for('showCategories')}}">
-				<button class="btn btn-default" id="new-catalog-item">
-					<span class="glyphicon glyphicon-glass" aria-hidden="true"></span>Go Back
-				</button>
+				<button>Cancel</button>
 			</a>
-	</form>
+		</div>
+	</div>

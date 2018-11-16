@@ -1,21 +1,36 @@
 {% include "header.html" %}
-			<h1>Edit Catalog Item</h1>
-			<form action="{{ url_for('editCatalogItem', item_id = item.id)}}" method = "post">
-					<a>Name:</a>
-					<input type ="text" maxlength="100" name="title" value="{{item.title }}">
-					<br>
-					<a>Description:</a>
-					<input type ="text" maxlength="100" name="description" value="{{item.description }}">
-					<br>
-					<label for="category">Category:</label>
+<form action="{{ url_for('editCatalogItem', item_id = item.id)}}" method = "post">
+<div class="all_data">
+		<table class = "item_details">
+			<tr>
+				<th class = "title" colspan="2">Edit Catalog Item</th>
+			</tr>
+			<tr>
+				<td class="item_label">Name:</td>
+				<td><input type ="text" maxlength="80" name="title" value="{{item.title }}" required></td>
+			</tr>
+			<tr>
+				<td class="item_label">Description:</td>
+				<td><textarea name="description" rows="4" cols="60">{{ item.description }}</textarea></td>
+			</tr>
+			<tr>
+				<td class="item_label">Category:</td>
+				<td>
+				<div class="dropdown">
+					<select name="category" size="4" required>
 					{% for category in categories %}
-					<div class="radio">
-					  <label>
-					    <input type="radio" name="category" value="{{category.name}}" {% if category.id == item.category_id %} checked {%endif%}>"{{category.name}}"
-					  </label>
-					</div>
+						<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
 					{% endfor %}
-					<p><input type="submit" value = 'Save'>
-						<a href = "{{url_for('showCategories')}}"><span>
-							<input type="button" value="Cancel"></span></a></p>
-			</form>
+					</select>
+				</div>
+				</td>
+			</tr>
+		</table>
+		<div class="buttons">
+				<input type="submit" value = 'Save'>
+				<a href = "{{url_for('showCategories')}}"><span>
+						<input type="button" value="Cancel"></span></a>
+		</div>
+	</div>
+</form>
+

@@ -1,6 +1,6 @@
 .catalog_info {
     width: 80%;
-    margin: 0 auto;
+    margin: 100px auto;
     border: 2px solid rgb(248, 245, 245);
     font-family: Arial, Helvetica, sans-serif;
     text-align: left;
@@ -13,6 +13,7 @@ th {
     font-weight: bold;
     padding: 10px;
     border-bottom: 1px solid rgb(148, 112, 112);
+    border-left: 1px solid rgb(148, 112, 112);
     background-color: rgb(155, 186, 192);
 }
 
