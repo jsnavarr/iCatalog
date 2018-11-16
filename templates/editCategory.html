@@ -1,9 +1,20 @@
 {% include "header.html" %}
-<h1>Edit {{category.name}}</h1>
 <form action="{{ url_for('editCategory',category_id = category.id)}}" method = "post">
-	<a>Name:</a>
-	<input type ="text" maxlength="100" name="name" value="{{category.name }}">
-	<p><input type="submit" value = 'Save'>
-		<a href = "{{url_for('showCategories')}}"><span>
-			<input type="button" value="Cancel"></span></a></p>
-</form>
+		<div class="all_data">
+			<table class = "item_details">
+				<tr>
+				<th class = "title" colspan="2">Edit Category</th>
+				</tr>
+				<tr>
+				<td class="item_label">Name:</td>
+				<td><textarea name="name" rows="4" cols="60" placeholder="Category Name" required>{{category.name}}</textarea></td>
+				</tr>
+			</table>
+			<div class="buttons">
+				<input type="submit" value = 'Save'>
+					<a href = "{{url_for('showCategories')}}">
+					<span>
+				<input type="button" value="Cancel"></span></a>
+			</div>
+		</div>
+	</form>

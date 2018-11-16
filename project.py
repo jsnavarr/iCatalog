@@ -124,12 +124,14 @@ def editCategory(category_id):
     if request.method == 'GET':
         return render_template('editCategory.html', category = editedCategory)
 
-#Delete a catalog category
+#Delete a catalog category and its catalog items
 @app.route('/category/<int:category_id>/delete', methods = ['GET','POST'])
 def deleteCategory(category_id):
     categoryToDelete = session.query(Category).filter_by(id = category_id).first()
+    
     if request.method == 'POST':
         session.delete(categoryToDelete)
+        session.query(CatalogItem).filter_by(category_id = category_id).delete()
         flash('%s Successfully Deleted' % categoryToDelete.name)
         session.commit()
         return redirect(url_for('showCategories', category_id = category_id))

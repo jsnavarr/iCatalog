@@ -1,9 +1,20 @@
 {% include "header.html" %}
-<h1>New Catalog Category</h1>
 <form action="{{ url_for('newCategory')}}" method = "post">
-	<a>Name:</a>
-	<input type ="text" maxlength="100" name="name" placeholder = 'category name'>
-		<p><input type='submit' value='Create'>
-		<a href = "{{url_for('showCategories')}}"><span>
-			<input type="button" value="Cancel"></span></a></p>
+	<div class="all_data">
+		<table class = "item_details">
+			<tr>
+			<th class = "title" colspan="2">New Category</th>
+			</tr>
+			<tr>
+			<td class="item_label">Name:</td>
+			<td><textarea name="name" rows="4" cols="60" placeholder="Category Name" required></textarea></td>
+			</tr>
+		</table>
+		<div class="buttons">
+			<input type="submit" value = 'Save'>
+				<a href = "{{url_for('showCategories')}}">
+				<span>
+			<input type="button" value="Cancel"></span></a>
+		</div>
+	</div>
 </form>
