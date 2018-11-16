@@ -32,7 +32,7 @@
 			</td>
 			<td class="catalog_item">
 			{% for item in items %}
-				<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">{{item.title}}</a>
+				<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">{{item.title}} <span id="category_added"> [ {{categories_with_items[loop.index0]}} ]</span></a>
 			{% endfor %}
 			</td>
 		</tr>

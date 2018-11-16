@@ -78,26 +78,25 @@ def CatalogUserJSON():
     user = session.query(User).filter_by(id = user_id).first()
     return jsonify(user= user.serialize)
 
-# def getCategoriesWithItems():
-#     items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
-#     categories_with_items=[]
-#     for i in items:
-#         category = session.query(Category).filter_by(id=i.category_id).first()
-#         categories_with_items.append(category.name+'('+i.title+')')
-#     print categories_with_items
-#     return categories_with_items
+def getCategoriesWithItems(items):
+    categories_with_items=[]
+    for i in items:
+        category = session.query(Category).filter_by(id=i.category_id).first()
+        categories_with_items.append(category.name)
+    print categories_with_items
+    return categories_with_items
 
-# def getCategoryName(category_id):
-#     return "luchas"
+def getCategoryName(category_id):
+    return "luchas"
 
 #Show all catalog categories
 @app.route('/')
 @app.route('/category')
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
-    # categories_with_items = getCategoriesWithItems()
     items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
-    return render_template('categories.html', categories = categories, items=items)
+    categories_with_items = getCategoriesWithItems(items=items)
+    return render_template('categories.html', categories = categories, items=items, categories_with_items=categories_with_items)
 
 #Create a new catalog category
 @app.route('/category/new', methods=['GET','POST'])

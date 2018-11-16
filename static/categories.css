@@ -46,6 +46,10 @@ th {
     padding: 12px 16px;
 }
 
+.catalog_item #category_added{
+    color: black;
+}
+
 .catalog_item a:hover {
     background-color:rgba(108, 250, 155, 0.5);
     color: rgb(42, 27, 78);
