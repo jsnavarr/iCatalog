@@ -26,15 +26,17 @@
 			</tr>
 		</table>
 		<div class="buttons">
+			{%if 'username' in session %}
 			<a href="{{url_for('editCatalogItem', item_id = item.id)}}">
 				<button >Edit</button>
 			</a>
 			<a href="{{url_for('deleteCatalogItem', item_id = item.id)}}">
-					<button >Delete</button>
+				<button >Delete</button>
 			</a>	
 			<a href="{{url_for('newCatalogItem')}}">
 				<button >New</button>
-			</a>	
+			</a>
+			{% endif %}
 			<a href="{{url_for('showCategories')}}">
 				<button>Cancel</button>
 			</a>

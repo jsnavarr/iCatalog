@@ -1,14 +1,19 @@
+.flash {
+    margin-top: 40px;
+    font-family: helvetica;
+    color: white;
+}
 .catalog_info {
     width: 80%;
-    margin: 50px auto 0 auto;
+    margin: 100px auto 20px auto;
     border: 2px solid rgb(248, 245, 245);
     font-family: Arial, Helvetica, sans-serif;
     text-align: left;
-    background-color: palegoldenrod;   
+    background-color: azure;   
 }
 
 th {
-    color: palegoldenrod;
+    color: azure;
     font-size: 24px;
     /* font-weight: bold; */
     padding: 10px;

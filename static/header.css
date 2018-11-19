@@ -20,11 +20,18 @@ body {
     padding: 5px 50px;
 }
 
-.top_bar #login {
+.top_bar .login {
     float: right;
     border-left: 1px solid white;
     background-color: maroon;
     padding: 5px 25px;
+}
+
+.signed_as {
+    font-size: small;
+    padding-top: 10px;
+    padding-right: 10px;
+    float:right;
 }
 
 .top_bar a {
@@ -32,6 +39,6 @@ body {
     text-decoration: none;
 }
 
-.top_bar #login:hover {
+.top_bar .login:hover {
     background-color: limegreen;
 }

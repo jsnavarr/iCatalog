@@ -8,8 +8,21 @@
 	</head>
 	<body>
 		<div class="top_bar">
-			<a id="top_bar_title">Catalog App</a>
-			<a id="login" href="{{url_for('login')}}" >Login</a>
+			<div id="top_bar_title">
+				<a >Catalog App</a>
+			</div> 
+			{%if 'username' not in session %}
+				<div class="login">
+					<a  href="{{url_for('showLogin')}}" >Login</a>
+				</div>
+			{% else %}
+				<div class="login">
+					<a href="{{url_for('disconnect')}}"> Logout </a>
+				</div>
+				<div class = "signed_as">
+						<a>Signed as: {{session['username']}}</a>
+				</div>
+			{% endif %}
 		</div>
 	</body>
 </html>
