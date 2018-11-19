@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
 from models import Base, Category, CatalogItem, User
 
@@ -94,7 +94,7 @@ def getCategoryName(category_id):
 @app.route('/category')
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
-    items = session.query(CatalogItem).order_by(asc(CatalogItem.title))
+    items = session.query(CatalogItem).order_by(CatalogItem.id.desc()).limit(10).all()
     categories_with_items = getCategoriesWithItems(items=items)
     return render_template('categories.html', categories = categories, items=items, categories_with_items=categories_with_items)
 
