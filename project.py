@@ -99,7 +99,7 @@ def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
     items = session.query(CatalogItem).order_by(CatalogItem.id.desc()).limit(10).all()
     categories_with_items = getCategoriesWithItems(items=items)
-    return render_template('categories.html', categories = categories, items=items, categories_with_items=categories_with_items)
+    return render_template('catalog.html', categories = categories, items=items, categories_with_items=categories_with_items)
 
 #Create a new catalog category
 @app.route('/category/new', methods=['GET','POST'])
@@ -161,7 +161,7 @@ def deleteCategory(category_id):
 def showCatalogItemDetails(item_id):
     item = session.query(CatalogItem).filter_by(id = item_id).first()
     categories = session.query(Category)
-    return render_template('catalogItemDetails.html', item = item, categories=categories)
+    return render_template('catalogItem.html', item = item, categories=categories)
 
 #Show catalog items of a specific category
 @app.route('/category/<int:category_id>')
@@ -169,7 +169,7 @@ def showCatalogItemDetails(item_id):
 def showCatalogItem(category_id):
     category = session.query(Category).filter_by(id = category_id).first()
     items = session.query(CatalogItem).filter_by(category_id = category_id).all()
-    return render_template('catalogItem.html', items = items, category = category)
+    return render_template('categoryCatalogItem.html', items = items, category = category)
 
 #Create a new catalog item
 @app.route('/category/item/new',methods=['GET','POST'])

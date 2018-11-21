@@ -1,16 +1,22 @@
 {% include "header.html" %}
 <form action="{{ url_for('newCategory')}}" method = "post">
-	<div class="all_data">
-		<table class = "item_details">
-			<tr>
-			<th class = "title" colspan="2">New Category</th>
-			</tr>
-			<tr>
-			<td class="item_label">Name:</td>
-			<td><textarea name="name" rows="4" cols="60" placeholder="Category Name" required></textarea></td>
-			</tr>
-		</table>
-		<div class="buttons">
+	<div class="categories_data">
+		<div class = "catalog_info">
+			<table>
+				<thead>
+					<th id="cat_title" colspan="2">New Category</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="item_label">Name:</td>
+						<td><textarea name="name" rows="4" placeholder="Category Name" required></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="all_buttons">
+		<div class="category_buttons">
 			<input type="submit" value = 'Save'>
 				<a href = "{{url_for('showCategories')}}">
 				<span>

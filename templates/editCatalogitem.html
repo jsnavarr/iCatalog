@@ -1,35 +1,41 @@
 {% include "header.html" %}
 <form action="{{ url_for('editCatalogItem', item_id = item.id)}}" method = "post">
-<div class="all_data">
-		<table class = "item_details">
-			<tr>
-				<th class = "title" colspan="2">Edit Catalog Item</th>
-			</tr>
-			<tr>
-				<td class="item_label">Name:</td>
-				<td><input type ="text" maxlength="80" name="title" value="{{item.title }}" required></td>
-			</tr>
-			<tr>
-				<td class="item_label">Description:</td>
-				<td><textarea name="description" rows="4" cols="60">{{ item.description }}</textarea></td>
-			</tr>
-			<tr>
-				<td class="item_label">Category:</td>
-				<td>
-				<div class="dropdown">
-					<select name="category" size="4" required>
-					{% for category in categories %}
-						<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
-					{% endfor %}
-					</select>
-				</div>
-				</td>
-			</tr>
-		</table>
-		<div class="buttons">
-				<input type="submit" value = 'Save'>
+	<div class="categories_data">
+		<div class = "catalog_info">
+			<table>
+				<thead>
+					<th id="cat_title" colspan="2">Edit Catalog Item</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="item_label">Name:</td>
+						<td><input type ="text" maxlength="80" name="title" value="{{item.title }}" required></td>
+					</tr>
+					<tr>
+						<td class="item_label">Description:</td>
+						<td><textarea name="description" rows="4">{{ item.description }}</textarea></td>
+					</tr>
+					<tr>
+						<td class="item_label">Category:</td>
+						<td>
+						<div class="dropdown">
+							<select name="category" size="4" required>
+							{% for category in categories %}
+								<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="all_buttons">
+		<div class="category_buttons">
+			<input type="submit" value = 'Save'>
 				<a href = "{{url_for('showCategories')}}"><span>
-						<input type="button" value="Cancel"></span></a>
+			<input type="button" value="Cancel"></span></a>
 		</div>
 	</div>
 </form>

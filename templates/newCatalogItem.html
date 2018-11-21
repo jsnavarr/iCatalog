@@ -1,32 +1,38 @@
 {% include "header.html" %}
 <form action="{{ url_for('newCatalogItem')}}" method = "post">
-    <div class="all_data">
-        <table class = "item_details">
-          <tr>
-            <th class = "title" colspan="2">New Catalog Item</th>
-          </tr>
-          <tr>
-            <td class="item_label">Name:</td>
-            <td><input type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
-          </tr>
-          <tr>
-            <td class="item_label">Description:</td>
-            <td><textarea name="description" rows="4" cols="60" placeholder="Catalog Item Description"></textarea></td>
-          </tr>
-          <tr>
-            <td class="item_label">Category:</td>
-            <td>
-            <div class="dropdown">
-              <select name="category" size="4" required>
-              {% for category in categories %}
-                <option value = "{{category.name}}">{{category.name}}</option>
-              {% endfor %}
-              </select>
-            </div>
-            </td>
-          </tr>
-        </table>
-        <div class="buttons">
+    <div class="categories_data">
+        <div class = "catalog_info">
+            <table>
+                <thead>
+                  <th id="cat_title" colspan="2">New Catalog Item</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="item_label">Name:</td>
+                    <td><input type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
+                  </tr>
+                  <tr>
+                    <td class="item_label">Description:</td>
+                    <td><textarea name="description" rows="4" placeholder="Catalog Item Description"></textarea></td>
+                  </tr>
+                  <tr>
+                    <td class="item_label">Category:</td>
+                    <td>
+                    <div class="dropdown">
+                      <select name="category" size="4" required>
+                      {% for category in categories %}
+                        <option value = "{{category.name}}">{{category.name}}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <div class="all_buttons">
+        <div class="category_buttons">
             <input type="submit" value = 'Save'>
               <a href = "{{url_for('showCategories')}}">
               <span>

@@ -1,7 +1,9 @@
 body {
     margin:0;
-    background-color: rgba(25, 25, 25, 0.8);
+    background: rgba(25, 25, 25, 0.8);
 }
+
+/* this is the to bar with the name of the app and the login button */
 .top_bar {
     list-style-type: none;
     width:100%;
@@ -9,24 +11,27 @@ body {
     position: fixed;
     top: 0;
     overflow: hidden;
-    background-color: darkblue;
+    background: darkblue;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
     text-align: left;
 }
 
+/* app name */
 .top_bar #top_bar_title {
     float: left;
     padding: 5px 50px;
 }
 
+/* this is the login/logout button */
 .top_bar .login {
     float: right;
     border-left: 1px solid white;
-    background-color: maroon;
+    background: maroon;
     padding: 5px 25px;
 }
 
+/* to show the name user logged in */
 .signed_as {
     font-size: small;
     padding-top: 10px;
@@ -40,5 +45,11 @@ body {
 }
 
 .top_bar .login:hover {
-    background-color: limegreen;
+    background: limegreen;
+}
+
+.flash {
+    margin-top: 40px;
+    font-family: helvetica;
+    color: white;
 }

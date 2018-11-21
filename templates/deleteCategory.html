@@ -1,21 +1,27 @@
 {% include "header.html" %}
 <form action="{{ url_for('deleteCategory',category_id = category.id)}}" method = "post">
-		<div class="all_data">
-			<table class = "item_details">
-				<tr>
-				<th class = "title" colspan="2">Are you sure you want to delete this category and all its catalog items?</th>
-				</tr>
-				<tr>
-				<td class="item_label">Name:</td>
-				<td><textarea name="name" rows="4" cols="60" placeholder="Category Name" disabled>{{category.name}}</textarea></td>
-				</tr>
+	<div class="categories_data">
+		<div class = "catalog_info">
+			<table>
+				<thead>
+					<th id="cat_title" colspan="2">Are you sure you want to delete this category and all its catalog items?</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="item_label">Name:</td>
+						<td><textarea name="name" rows="4" placeholder="Category Name" disabled>{{category.name}}</textarea></td>
+					</tr>
+				</tbody>
 			</table>
-			<div class="buttons">
-				<input class="delete_data" type="submit" value = 'Delete'>
-					<a href = "{{url_for('showCategories')}}">
-					<span>
-				<input type="button" value="Cancel"></span></a>
-			</div>
 		</div>
-	</form>
+	</div>
+	<div class="all_buttons">
+		<div class="category_buttons">
+			<input class="delete_data" type="submit" value = 'Delete'>
+				<a href = "{{url_for('showCategories')}}">
+				<span>
+			<input type="button" value="Cancel"></span></a>
+		</div>
+	</div>
+</form>
 

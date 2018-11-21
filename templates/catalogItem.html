@@ -1,49 +1,50 @@
 {% include "header.html" %}
-	<!-- <div class = 'flash'>
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
-			<ul>
-			{% for message in messages %}
-				<li> <strong> {{ message }} </strong> </li>
-			{% endfor %}
-			</ul>
-			{% endif %}
-		{% endwith %}
-	</div> -->
-	<div class="all_data">
-	<table class = "catalog_info">
-		<div id = "top_bar_info">
-			<th id="categories">Category </th>
-			<th id="latest_items">Catalog items</th>
-		</div>
-		<tr class="info">
-			<td class="category_item">
-				<a>{{category.name}}</a>
-			</td>
-			<td class="catalog_item">
-			{% for item in items %}
-				<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">{{item.title}}</a>
-			{% endfor %}
-			</td>
-		</tr>
-	</table>
+<div class="categories_data">
+	<div class = "catalog_info">
+		<table>
+			<thead>
+				<th id="cat_title" colspan="2">Catalog Item Details</th>
+			</head>
+			<tbody>
+				<tr>
+					<td class="item_label">Name:</td>
+					<td><input class="text_item" type ="text" maxlength="80" name="title" value="{{item.title }}" disabled></td>
+				</tr>
+				<tr>
+					<td class="item_label">Description:</td>
+					<td><textarea name="description" rows="6" disabled>{{ item.description }}</textarea></td>
+				</tr>
+				<tr>
+					<td class="item_label">Category:</td>
+					<td>
+					<div class="dropdown">
+						<select name="category" size="4" disabled>
+						{% for category in categories %}
+							<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
+						{% endfor %}
+						</select>
+					</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
-	<div class="buttons">
+<div class="all_buttons">
+	<div class="category_buttons">
 		{%if 'username' in session %}
+		<a href="{{url_for('editCatalogItem', item_id = item.id)}}">
+			<button >Edit</button>
+		</a>
+		<a href="{{url_for('deleteCatalogItem', item_id = item.id)}}">
+			<button >Delete</button>
+		</a>	
 		<a href="{{url_for('newCatalogItem')}}">
-			<button >New Catalog Item</button>
+			<button >New</button>
 		</a>
-		<a href="{{url_for('newCategory')}}">
-			<button >New Category</button>
-		</a>
-		<a href="{{url_for('editCategory', category_id = category.id )}}">
-			<button >Edit Category</button>
-		</a>
-		<a href="{{url_for('deleteCategory', category_id = category.id)}}">
-			<button >Delete Category</button>
-			</a>
 		{% endif %}
 		<a href="{{url_for('showCategories')}}">
 			<button>Cancel</button>
 		</a>
 	</div>
+</div>
