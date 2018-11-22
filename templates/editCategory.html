@@ -1,3 +1,15 @@
+<!-- 
+This code will render a table to display the category to be edited:
+    +--------------------------------------------------+
+	| Edit Category                                    |
+	+----------------+---------------------------------+
+	|                |  +--------------------------+   |
+	|      Name      |  |  Category Name           |   |
+	|                |  |                          |   |
+	|                |  +--------------------------+   |
+	+----------------+---------------------------------+
+ -->
+{% block content %}
 {% include "header.html" %}
 <form action="{{ url_for('editCategory',category_id = category.id)}}" method = "post">
 	<div class="categories_data">
@@ -24,3 +36,4 @@
 		</div>
 	</div>
 </form>
+{% endblock %}

@@ -1,3 +1,15 @@
+<!-- 
+This code will render a table to display the category to be added:
+    +--------------------------------------------------+
+	| New Category                                     |
+	+----------------+---------------------------------+
+	|                |  +--------------------------+   |
+	|      Name      |  |  Category Name           |   |
+	|                |  |                          |   |
+	|                |  +--------------------------+   |
+	+----------------------------+---------------------+
+ -->
+{% block content %}
 {% include "header.html" %}
 <form action="{{ url_for('newCategory')}}" method = "post">
 	<div class="categories_data">
@@ -9,7 +21,8 @@
 				<tbody>
 					<tr>
 						<td class="item_label">Name:</td>
-						<td><textarea name="name" rows="4" placeholder="Category Name" required></textarea></td>
+						<td><textarea name="name" rows="4" placeholder="Category Name" required></textarea>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -24,3 +37,4 @@
 		</div>
 	</div>
 </form>
+{% endblock %}

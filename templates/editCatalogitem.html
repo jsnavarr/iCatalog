@@ -1,3 +1,16 @@
+<!-- 
+This code will render a table to edit a catalog item with 1 header and 2 colums:
+	+------------------+-------------------------------+
+    | Edit Catalog Item                                |
+	+------------------+-------------------------------+
+	|           Name   |  ______________________       |
+	|    Description   |  ______________________       |
+	|       Category   |  ___________                  |
+	|                  |  ___________                  |
+	|                  |  ___________                  |
+	+------------------+-------------------------------+
+ -->
+{% block content %}
 {% include "header.html" %}
 <form action="{{ url_for('editCatalogItem', item_id = item.id)}}" method = "post">
 	<div class="categories_data">
@@ -21,7 +34,11 @@
 						<div class="dropdown">
 							<select name="category" size="4" required>
 							{% for category in categories %}
-								<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
+								<option value = "{{category.name}}"
+								{% if category.id == item.category_id %} 
+									selected 
+								{% endif %}>
+								{{category.name}}</option>
 							{% endfor %}
 							</select>
 						</div>
@@ -39,4 +56,5 @@
 		</div>
 	</div>
 </form>
+{% endblock %}
 

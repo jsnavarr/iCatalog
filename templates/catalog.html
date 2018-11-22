@@ -1,3 +1,16 @@
+<!-- 
+This code will render a table to display categories in one column
+and latest catalog items in another
+    +----------------+---------------------------------+
+    | Category       |  Latest Items                   |
+	+----------------+---------------------------------+
+	| Category1      |  item1 [Category x]             |
+	| Category2      |  item2 [Category y]             |
+	|   |            |   |                             |
+	| Category n     |  item n [Category z]            |
+	|                |                                 |
+	+----------------+---------------------------------+
+ -->
 {% block content %}
 {% include "header.html" %}
 <div class = 'flash'>
@@ -21,12 +34,17 @@
 			<tr class="info">
 				<td class="category_item">
 				{% for category in categories %}
-					<a href = "{{url_for('showCatalogItem', category_id = category.id)}}">{{category.name}}</a>
+					<a href = "{{url_for('showCatalogItem', 
+						category_id = category.id)}}">{{category.name}}</a>
 				{% endfor %}
 				</td>
 				<td class="catalog_item">
 				{% for item in items %}
-					<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">{{item.title}} <span id="category_added"> [ {{categories_with_items[loop.index0]}} ]</span></a>
+					<a href = "{{url_for('showCatalogItemDetails', 
+						item_id = item.id)}}">{{item.title}} 
+						<span id="category_added"> 
+							[ {{categories_with_items[loop.index0]}} ]</span>
+					</a>
 				{% endfor %}
 				</td>
 			</tr>

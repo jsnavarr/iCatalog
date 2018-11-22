@@ -1,10 +1,10 @@
-/* the main table will have a widht of 50% */
+/* The main table will have a widht of 50% */
 .categories_data{
     width: 50%;
     margin: 100px auto 20px auto;
 }
 
-/* style for the main table */
+/* Style for the main table */
 .catalog_info {
     margin: 0 auto;
     min-height: 150px;
@@ -14,24 +14,24 @@
     background: azure;   
 }
 
-/* make it 100% because otherwise it automatically creates left/right margins
-and would not match the width of the form containing the buttons */
+/* Make it 100% because otherwise it automatically creates left/right margins
+    and would not match the width of the form containing the buttons */
 table {
     width: 100%;
 }
 
-/* one of the headers of the table which could fit the full width or just one
-column, depending of the view */
+/* One of the headers of the table which could fit the full width or just one
+    column, depending of the view */
 #cat_title {
     width: 20%;
 }
 
-/* second header of the table used in the main view */
+/* Second header of the table used in the main view */
 #latest_items_title {
     width: 80%;
 }
 
-/* styles for the table headers */
+/* Styles for the table headers */
 #cat_title, #latest_items_title {
     font-weight: lighter;
     font-size: 24px;
@@ -42,7 +42,7 @@ column, depending of the view */
     color: azure;
 }
 
-/* style for the "a" items listed in each cell of the table */
+/* Style for the "a" items listed in each cell of the table */
 .category_item a, .catalog_item a {
     display: block;
     text-decoration: none;
@@ -76,8 +76,8 @@ column, depending of the view */
     border-radius: 5px;
 }
 
-/* this style is for the category name so there is no change in style when 
-mouse is over the label */
+/* This style is for the category name so there is no change in style when 
+    mouse is over the label */
 #categogy_item_no_hover {
     color: royalblue;
     font-size: 20px;
@@ -85,15 +85,15 @@ mouse is over the label */
 }
 
 /* Here starts the style for the views which contain buttons below the 
-main table */
+    main table */
 
-/* width to match the table listing the categories/catalog items */
+/* Width to match the table listing the categories/catalog items */
 .all_buttons {
     width: 50%;
     margin: 10px auto 20px auto;
 }
 
-/* the buttons will be centered */
+/* The buttons will be centered */
 .category_buttons {
     margin: 0 auto;
     border: 3px double azure;
@@ -101,30 +101,30 @@ main table */
     background: rgba(0, 50, 100, 0.5);
 }
 
-/* to eliminate the underline decoration */
+/* To eliminate the underline decoration */
 .category_buttons a{
     text-decoration: none;
 }
 
-/* this is used for the labels of each database field */
+/* This is used for the labels of each database field */
 .item_label {
     text-align: right;
     width: 20%;
 }
 
-/* this will be on the right of each database field */
+/* This will be on the right of each database field */
 textarea, .text_item, .dropdown{
     width: 80%;
 }
 
-/* style the components where user will click or input data */
+/* Style the components where user will click or input data */
 textarea, .text_item, .dropdown select, input, button {
     margin: 10px 20px;
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* the delete button will be red */
+/* The delete button will be red */
 .delete_data {
     background: red;
     color: white;

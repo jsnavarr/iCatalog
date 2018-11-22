@@ -1,3 +1,16 @@
+<!-- 
+This code will render a table to create a new catalog item with 1 header and 2 colums:
+    +--------------------------------------------------+
+    | New Catalog Item                                 |
+	+------------------+-------------------------------+
+	|           Name   |  ______________________       |
+	|    Description   |  ______________________       |
+	|       Category   |  ___________                  |
+	|                  |  ___________                  |
+	|                  |  ___________                  |
+	+------------------+-------------------------------+
+ -->
+{% block content %}
 {% include "header.html" %}
 <form action="{{ url_for('newCatalogItem')}}" method = "post">
     <div class="categories_data">
@@ -7,36 +20,39 @@
                   <th id="cat_title" colspan="2">New Catalog Item</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="item_label">Name:</td>
-                    <td><input type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
-                  </tr>
-                  <tr>
-                    <td class="item_label">Description:</td>
-                    <td><textarea name="description" rows="4" placeholder="Catalog Item Description"></textarea></td>
-                  </tr>
-                  <tr>
-                    <td class="item_label">Category:</td>
-                    <td>
-                    <div class="dropdown">
-                      <select name="category" size="4" required>
-                      {% for category in categories %}
-                        <option value = "{{category.name}}">{{category.name}}</option>
-                      {% endfor %}
-                      </select>
-                    </div>
-                    </td>
-                  </tr>
+                    <tr>
+                        <td class="item_label">Name:</td>
+                        <td><input type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
+                    </tr>
+                    <tr>
+                        <td class="item_label">Description:</td>
+                        <td><textarea name="description" rows="4" placeholder="Catalog Item Description"></textarea>
+                        </td>
+                     </tr>
+                    <tr>
+                        <td class="item_label">Category:</td>
+                        <td>
+                            <div class="dropdown">
+                            <select name="category" size="4" required>
+                            {% for category in categories %}
+                                <option value = "{{category.name}}">
+                                    {{category.name}}</option>
+                            {% endfor %}
+                            </select>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
     </div>
     <div class="all_buttons">
         <div class="category_buttons">
             <input type="submit" value = 'Save'>
-              <a href = "{{url_for('showCategories')}}">
-              <span>
-                <input type="button" value="Cancel"></span></a>
+                <a href = "{{url_for('showCategories')}}">
+                <span>
+                    <input type="button" value="Cancel"></span></a>
         </div>
   </div>
 </form>
+{% endblock %}

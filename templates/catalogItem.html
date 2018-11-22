@@ -1,4 +1,17 @@
-{% include "header.html" %}
+<!-- 
+This code will render a table to display a catalog item with 1 header and 2 colums:
+	+------------------+-------------------------------+
+    | Catalog Item Details                             |
+	+------------------+-------------------------------+
+	|           Name   |  ______________________       |
+	|    Description   |  ______________________       |
+	|       Category   |  ___________                  |
+	|                  |  ___________                  |
+	|                  |  ___________                  |
+	+------------------+-------------------------------+
+ -->
+ {% block content %}
+ {% include "header.html" %}
 <div class="categories_data">
 	<div class = "catalog_info">
 		<table>
@@ -20,7 +33,11 @@
 					<div class="dropdown">
 						<select name="category" size="4" disabled>
 						{% for category in categories %}
-							<option value = "{{category.name}}"{% if category.id == item.category_id %} selected {% endif %}>{{category.name}}</option>
+							<option value = "{{category.name}}"
+							{% if category.id == item.category_id %} 
+								selected 
+							{% endif %}>
+						{{category.name}}</option>
 						{% endfor %}
 						</select>
 					</div>
@@ -48,3 +65,4 @@
 		</a>
 	</div>
 </div>
+{% endblock %}
