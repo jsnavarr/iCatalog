@@ -12,7 +12,7 @@ This code will render a table to display the category to be deleted:
  -->
 {% block content %}
 {% include "header.html" %}
-<form action="{{ url_for('deleteCategory',category_id = category.id)}}" method = "post">
+<form action="{{ url_for('deleteCategory',category_name = category.name)}}" method = "post">
 	<div class="categories_data">
 		<div class = "catalog_info">
 			<table>

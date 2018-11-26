@@ -26,7 +26,7 @@ with 2 headers and 2 colums:
 				</td>
 				<td class="catalog_item">
 				{% for item in items %}
-					<a href = "{{url_for('showCatalogItemDetails', item_id = item.id)}}">
+					<a href = "{{url_for('showCatalogItemDetails', category_name=category.name, item_title = item.title)}}">
 						{{item.title}}</a>
 				{% endfor %}
 				</td>
@@ -39,10 +39,10 @@ with 2 headers and 2 colums:
 	<div class="category_buttons">
 		{%if 'username' in session %}
 		<div>
-			<a href="{{url_for('editCategory', category_id = category.id )}}">
+			<a href="{{url_for('editCategory', category_name = category.name)}}">
 				<button >Edit Category</button>
 			</a>
-			<a href="{{url_for('deleteCategory', category_id = category.id)}}">
+			<a href="{{url_for('deleteCategory', category_name = category.name)}}">
 				<button >Delete Category</button>
 			</a>
 			<a href="{{url_for('newCategory')}}">

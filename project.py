@@ -34,14 +34,14 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-@app.route('/category/item/JSON')
+@app.route('/catalog/item/JSON')
 # JSON APIs to view all catalog items
 def catalogItemsJSON():
     items = session.query(CatalogItem).all()
     return jsonify(categoryItems=[i.serialize for i in items])
 
 
-@app.route('/category/<int:category_id>/item/JSON')
+@app.route('/catalog/<int:category_id>/item/JSON')
 # JSON APIs to view catalog items for specific category
 def categoryCatalogItemJSON(category_id):
     category = session.query(Category).filter_by(id=category_id).first()
@@ -50,21 +50,21 @@ def categoryCatalogItemJSON(category_id):
     return jsonify(categoryItems=[i.serialize for i in items])
 
 
-@app.route('/category/item/<int:item_id>/JSON')
+@app.route('/catalog/item/<int:item_id>/JSON')
 # JSON APIs to view specific catalog item data
 def CatalogItemJSON(category_id, item_id):
     item = session.query(CatalogItem).filter_by(id=item_id).first()
     return jsonify(category_Item=item.serialize)
 
 
-@app.route('/category/JSON')
+@app.route('/catalog/JSON')
 # JSON APIs to view all categories
 def CatalogCategoriesJSON():
     categories = session.query(Category).all()
     return jsonify(categories=[r.serialize for r in categories])
 
 
-@app.route('/category/<int:category_id>/JSON')
+@app.route('/catalog/<int:category_id>/JSON')
 # JSON APIs to view specific category
 def CatalogCategoryJSON():
     category = session.query(Category).first()
@@ -97,7 +97,7 @@ def getCategories(items):
 
 
 @app.route('/')
-@app.route('/category')
+@app.route('/catalog')
 # Show all categories with the latest 10 catalog items added
 def showCategories():
     categories = session.query(Category).order_by(asc(Category.name))
@@ -113,7 +113,7 @@ def showCategories():
         categories_with_items=categories_with_items)
 
 
-@app.route('/category/new', methods=['GET', 'POST'])
+@app.route('/catalog/new', methods=['GET', 'POST'])
 # Create a new category
 def newCategory():
     # If user has not logged in then it will redirected to log in
@@ -121,33 +121,48 @@ def newCategory():
         flash('In order to add a new category you must log in')
         return redirect('/login')
     if request.method == 'POST':
-        newCategory = Category(
-            user_id=login_session['user_id'])
-        session.add(newCategory)
-        flash('New Category %s Successfully Created' % newCategory.name)
-        session.commit()
+        # Veriry that category name is not already in database
+        name = request.form['name']
+        if session.query(Category).filter_by(name=name).first():
+            flash('Category name already exist .. record not added')
+        else:
+            newCategory = Category(
+                name=request.form['name'],
+                user_id=login_session['user_id'])
+            session.add(newCategory)
+            flash('New Category %s Successfully Created' % newCategory.name)
+            session.commit()
         return redirect(url_for('showCategories'))
     if request.method == 'GET':
         return render_template('newCategory.html')
 
 
-@app.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
+@app.route('/catalog/<category_name>/edit', methods=['GET', 'POST'])
 # Edit a catalog category
-def editCategory(category_id):
+def editCategory(category_name):
     # If user has not logged in then it will redirected to log in
     if 'username' not in login_session:
         flash('In order to edit a category you must log in')
         return redirect('/login')
     # Get the category to be edited
     editedCategory = session.query(Category).filter_by(
-        id=category_id).first()
+        name=category_name).first()
     # If user is the owner then he is allowed to edit this item
     if editedCategory.user_id == login_session['user_id']:
         if request.method == 'POST':
             if request.form['name']:
-                editedCategory.name = request.form['name']
-                session.commit()
-                flash('Category successfully edited %s' % editedCategory.name)
+                # add the record only if the new name is not already
+                # in database
+                name = request.form['name']
+                if session.query(Category).filter(
+                        id != editedCategory.id).filter_by(name=name).first():
+                    flash('Category name already exist .. record not updated')
+                else:
+                    editedCategory.name = request.form['name']
+                    session.commit()
+                    flash(
+                        'Category successfully edited %s'
+                        % editedCategory.name)
                 return redirect(url_for('showCategories'))
         if request.method == 'GET':
             return render_template(
@@ -159,26 +174,26 @@ def editCategory(category_id):
         return redirect(url_for('showCategories'))
 
 
-@app.route('/category/<int:category_id>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<category_name>/delete', methods=['GET', 'POST'])
 # Delete a category and its catalog items
-def deleteCategory(category_id):
+def deleteCategory(category_name):
     # If user has not logged in then it will redirected to log in
     if 'username' not in login_session:
         flash('In order to delete a category you must log in')
         return redirect('/login')
     # Get the category to be deleted
     categoryToDelete = session.query(Category).filter_by(
-        id=category_id).first()
+        name=category_name).first()
     # If user is the owner then he is allowed to delete this item
     if categoryToDelete.user_id == login_session['user_id']:
         if request.method == 'POST':
             session.delete(categoryToDelete)
             session.query(CatalogItem).filter_by(
-                category_id=category_id).delete()
+                category_id=categoryToDelete.id).delete()
             flash('%s Successfully Deleted' % categoryToDelete.name)
             session.commit()
             return redirect(
-                url_for('showCategories', category_id=category_id))
+                url_for('showCategories', category_name=category_name))
         if request.method == 'GET':
             return render_template(
                 'deleteCategory.html',
@@ -189,27 +204,27 @@ def deleteCategory(category_id):
         return redirect(url_for('showCategories'))
 
 
-@app.route('/category/item/<int:item_id>')
+@app.route('/catalog/<category_name>/<item_title>')
 # Show specific catalog item details
-def showCatalogItemDetails(item_id):
-    item = session.query(CatalogItem).filter_by(id=item_id).first()
+def showCatalogItemDetails(category_name, item_title):
+    item = session.query(CatalogItem).filter_by(title=item_title).first()
     categories = session.query(Category)
     return render_template(
-        'catalogItem.html', item=item, categories=categories)
+        'catalogItem.html', category_name=category_name,
+        item=item, categories=categories)
 
 
-@app.route('/category/<int:category_id>')
-@app.route('/category/<int:category_id>/item')
+@app.route('/catalog/<category_name>')
 # Show catalog items for a specific category
-def showCatalogItem(category_id):
-    category = session.query(Category).filter_by(id=category_id).first()
+def showCatalogItem(category_name):
+    category = session.query(Category).filter_by(name=category_name).first()
     items = session.query(CatalogItem).filter_by(
-        category_id=category_id).all()
+        category_id=category.id).all()
     return render_template(
         'categoryCatalogItem.html', items=items, category=category)
 
 
-@app.route('/category/item/new', methods=['GET', 'POST'])
+@app.route('/catalog/item/new', methods=['GET', 'POST'])
 # Create a new catalog item
 def newCatalogItem():
     # If user has not logged in then it will redirected to log in
@@ -232,15 +247,19 @@ def newCatalogItem():
         return render_template('newCatalogItem.html', categories=categories)
 
 
-@app.route('/category/item/<int:item_id>/edit', methods=['GET', 'POST'])
+@app.route(
+    '/catalog/<category_name>/<item_title>/edit',
+    methods=['GET', 'POST'])
 # Edit a catalog item
-def editCatalogItem(item_id):
+def editCatalogItem(category_name, item_title):
     # If user has not logged in then it will redirected to log in
     if 'username' not in login_session:
         flash('In order to edit a catalog item you must log in')
         return redirect('/login')
     # Get the catalog item to be edited
-    editedItem = session.query(CatalogItem).filter_by(id=item_id).first()
+    category = session.query(Category).filter_by(name=category_name).first()
+    editedItem = session.query(CatalogItem).filter_by(
+        category_id=category.id).filter_by(title=item_title).first()
     # Get the categories so they are displayed in a list of options
     categories = session.query(Category)
     # If user is the owner then he is allowed to edit this item
@@ -260,23 +279,27 @@ def editCatalogItem(item_id):
             return redirect(url_for('showCategories'))
         if request.method == 'GET':
             return render_template(
-                'editCatalogItem.html', item_id=item_id,
-                item=editedItem, categories=categories)
+                'editCatalogItem.html', category_name=category_name,
+                item_title=item_title, item=editedItem, categories=categories)
     # User is not the owner so it is not allowed to make any changes
     else:
         flash('You can\'t edit this item because you are not the owner')
         return redirect(url_for('showCategories'))
 
 
-@app.route('/category/item/<int:item_id>/delete', methods=['GET', 'POST'])
+@app.route(
+    '/catalog/<category_name>/<item_title>/delete',
+    methods=['GET', 'POST'])
 # Delete a catalog item
-def deleteCatalogItem(item_id):
+def deleteCatalogItem(category_name, item_title):
     # If user has not logged in then it will redirected to log in
     if 'username' not in login_session:
         flash('In order to delete a catalog item you must log in')
         return redirect('/login')
     # Get the catalog item to be deleted
-    itemToDelete = session.query(CatalogItem).filter_by(id=item_id).first()
+    category = session.query(Category).filter_by(name=category_name).first()
+    itemToDelete = session.query(CatalogItem).filter_by(
+        category_id=category.id).filter_by(title=item_title).first()
     # Get the categories so they are displayed in a list of options
     categories = session.query(Category)
     # If user is the owner then he is allowed to delete this item
@@ -289,8 +312,8 @@ def deleteCatalogItem(item_id):
             return redirect(url_for('showCategories'))
         if request.method == 'GET':
             return render_template(
-                'deleteCatalogItem.html', item=itemToDelete,
-                categories=categories)
+                'deleteCatalogItem.html', category_name=category_name,
+                item=itemToDelete, categories=categories)
     # User is not the owner so it is not allowed to make any changes
     else:
         flash('You can\'t delete this item because you are not the owner')

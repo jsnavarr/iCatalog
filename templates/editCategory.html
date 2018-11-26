@@ -11,7 +11,7 @@ This code will render a table to display the category to be edited:
  -->
 {% block content %}
 {% include "header.html" %}
-<form action="{{ url_for('editCategory',category_id = category.id)}}" method = "post">
+<form action="{{ url_for('editCategory',category_name = category.name)}}" method = "post">
 	<div class="categories_data">
 		<div class = "catalog_info">
 			<table>

@@ -35,13 +35,13 @@ and latest catalog items in another
 				<td class="category_item">
 				{% for category in categories %}
 					<a href = "{{url_for('showCatalogItem', 
-						category_id = category.id)}}">{{category.name}}</a>
+					category_name=category.name)}}">{{category.name}}</a>
 				{% endfor %}
 				</td>
 				<td class="catalog_item">
 				{% for item in items %}
 					<a href = "{{url_for('showCatalogItemDetails', 
-						item_id = item.id)}}">{{item.title}} 
+						category_name=categories_with_items[loop.index0], item_title = item.title)}}">{{item.title}} 
 						<span id="category_added"> 
 							[ {{categories_with_items[loop.index0]}} ]</span>
 					</a>

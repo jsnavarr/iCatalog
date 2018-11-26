@@ -12,7 +12,7 @@ This code will render a table to edit a catalog item with 1 header and 2 colums:
  -->
 {% block content %}
 {% include "header.html" %}
-<form action="{{ url_for('editCatalogItem', item_id = item.id)}}" method = "post">
+<form action="{{ url_for('editCatalogItem', category_name = category_name, item_title = item.title)}}" method = "post">
 	<div class="categories_data">
 		<div class = "catalog_info">
 			<table>

@@ -50,10 +50,10 @@ This code will render a table to display a catalog item with 1 header and 2 colu
 <div class="all_buttons">
 	<div class="category_buttons">
 		{%if 'username' in session %}
-		<a href="{{url_for('editCatalogItem', item_id = item.id)}}">
+		<a href="{{url_for('editCatalogItem', category_name = category_name, item_title = item.title)}}">
 			<button >Edit</button>
 		</a>
-		<a href="{{url_for('deleteCatalogItem', item_id = item.id)}}">
+		<a href="{{url_for('deleteCatalogItem', category_name = category_name, item_title = item.title)}}">
 			<button >Delete</button>
 		</a>	
 		<a href="{{url_for('newCatalogItem')}}">
