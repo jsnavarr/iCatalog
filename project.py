@@ -38,51 +38,99 @@ session = DBSession()
 # JSON APIs to view all catalog items
 def catalogItemsJSON():
     items = session.query(CatalogItem).all()
-    return jsonify(categoryItems=[i.serialize for i in items])
+    if items:
+        return jsonify(categoryItems=[i.serialize for i in items])
+    return jsonify(categoryItems=[])
 
 
 @app.route('/catalog/<int:category_id>/item/JSON')
-# JSON APIs to view catalog items for specific category
-def categoryCatalogItemJSON(category_id):
-    category = session.query(Category).filter_by(id=category_id).first()
+# JSON APIs to view catalog items for specific category_id
+def categoryIdItemJSON(category_id):
     items = session.query(CatalogItem).filter_by(
         category_id=category_id).all()
-    return jsonify(categoryItems=[i.serialize for i in items])
+    if items:
+        return jsonify(categoryItems=[i.serialize for i in items])
+    return jsonify(categoryItems=[])
 
+
+@app.route('/catalog/<string:category_name>/item/JSON')
+# JSON APIs to view catalog items for specific category_name
+def categoryNameItemJSON(category_name):
+    category = session.query(Category).filter_by(name=category_name).first()
+    if category:
+        items = session.query(CatalogItem).filter_by(
+            category_id=category.id).all()
+        if items:
+            return jsonify(categoryItems=[i.serialize for i in items])
+    return jsonify(categoryItems=[])
 
 @app.route('/catalog/<int:category_id>/item/<int:item_id>/JSON')
-# JSON APIs to view specific catalog item data
-def CatalogItemJSON(category_id, item_id):
-    item = session.query(CatalogItem).filter_by(id=item_id).first()
-    return jsonify(category_Item=item.serialize)
+# JSON APIs to view specific catalog item data in category_id
+def categoryIdItemIdJSON(category_id, item_id):
+    category = session.query(Category).filter_by(id=category_id).first()
+    if category:
+        item = session.query(CatalogItem).filter_by(
+            category_id=category.id).filter_by(id=item_id).first()
+        if item:
+            return jsonify(category_Item=item.serialize)
+    return jsonify(category_Item=[])
+
+
+@app.route('/catalog/<string:category_name>/<string:item_title>/JSON')
+# JSON APIs to view specific catalog item data in category_name
+def categoryNameItemNameJSON(category_name, item_title):
+    category = session.query(Category).filter_by(name=category_name).first()
+    if category:
+        item = session.query(CatalogItem).filter_by(
+            category_id=category.id).filter_by(title=item_title).first()
+        if item:
+            return jsonify(category_Item=item.serialize)
+    return jsonify(category_Item=[])
 
 
 @app.route('/catalog/JSON')
 # JSON APIs to view all categories
-def CatalogCategoriesJSON():
+def categoriesJSON():
     categories = session.query(Category).all()
-    return jsonify(categories=[r.serialize for r in categories])
+    if categories:
+        return jsonify(categories=[r.serialize for r in categories])
+    return jsonify(categories=[])
 
 
 @app.route('/catalog/<int:category_id>/JSON')
-# JSON APIs to view specific category
-def CatalogCategoryJSON(category_id):
+# JSON APIs to view specific category by id
+def categoryIdJSON(category_id):
     category = session.query(Category).filter_by(id=category_id).first()
-    return jsonify(category=category.serialize)
+    if category:
+        return jsonify(category=category.serialize)
+    return jsonify(category=[])
+
+
+@app.route('/catalog/<string:category_name>/JSON')
+# JSON APIs to view specific category by name
+def categoryNameJSON(category_name):
+    category = session.query(Category).filter_by(name=category_name).first()
+    if category:
+        return jsonify(category=category.serialize)
+    return jsonify(category=[])
 
 
 @app.route('/user/JSON')
 # JSON APIs to view all users
-def CatalogUsersJSON():
+def catalogUsersJSON():
     users = session.query(User).all()
-    return jsonify(users=[u.serialize for u in users])
+    if users:
+        return jsonify(users=[u.serialize for u in users])
+    return jsonify(users=[])
 
 
 @app.route('/user/<int:user_id>/JSON')
 # JSON APIs to view specific user information
-def CatalogUserJSON(user_id):
+def catalogUserJSON(user_id):
     user = session.query(User).filter_by(id=user_id).first()
-    return jsonify(user=user.serialize)
+    if user:
+        return jsonify(user=user.serialize)
+    return jsonify(user=[])
 
 
 def getCategories(items):
