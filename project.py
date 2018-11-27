@@ -50,7 +50,7 @@ def categoryCatalogItemJSON(category_id):
     return jsonify(categoryItems=[i.serialize for i in items])
 
 
-@app.route('/catalog/item/<int:item_id>/JSON')
+@app.route('/catalog/<int:category_id>/item/<int:item_id>/JSON')
 # JSON APIs to view specific catalog item data
 def CatalogItemJSON(category_id, item_id):
     item = session.query(CatalogItem).filter_by(id=item_id).first()
@@ -66,8 +66,8 @@ def CatalogCategoriesJSON():
 
 @app.route('/catalog/<int:category_id>/JSON')
 # JSON APIs to view specific category
-def CatalogCategoryJSON():
-    category = session.query(Category).first()
+def CatalogCategoryJSON(category_id):
+    category = session.query(Category).filter_by(id=category_id).first()
     return jsonify(category=category.serialize)
 
 
@@ -80,7 +80,7 @@ def CatalogUsersJSON():
 
 @app.route('/user/<int:user_id>/JSON')
 # JSON APIs to view specific user information
-def CatalogUserJSON():
+def CatalogUserJSON(user_id):
     user = session.query(User).filter_by(id=user_id).first()
     return jsonify(user=user.serialize)
 
@@ -207,7 +207,10 @@ def deleteCategory(category_name):
 @app.route('/catalog/<category_name>/<item_title>')
 # Show specific catalog item details
 def showCatalogItemDetails(category_name, item_title):
-    item = session.query(CatalogItem).filter_by(title=item_title).first()
+    category = session.query(Category).filter_by(name=category_name).first()
+    # Look for the item title in above category
+    item = session.query(CatalogItem).filter_by(
+        category_id=category.id).filter_by(title=item_title).first()
     categories = session.query(Category)
     return render_template(
         'catalogItem.html', category_name=category_name,
@@ -235,13 +238,22 @@ def newCatalogItem():
     if request.method == 'POST':
         category = session.query(Category).filter_by(
             name=request.form['category']).first()
-        newItem = CatalogItem(
-            title=request.form['title'],
-            description=request.form['description'],
-            category_id=category.id, user_id=login_session['user_id'])
-        session.add(newItem)
-        session.commit()
-        flash('New Category %s Item Successfully Created' % (newItem.title))
+        # Add a new item only if title does not exist
+        if session.query(CatalogItem).filter_by(
+                category_id=category.id).filter_by(
+                title=request.form['title']).first():
+            flash('Catalog item description already exist in this category.. \
+                record not updated')
+        else:
+            newItem = CatalogItem(
+                title=request.form['title'],
+                description=request.form['description'],
+                category_id=category.id, user_id=login_session['user_id'])
+            session.add(newItem)
+            session.commit()
+            flash(
+                'New Catalog Item: %s Successfully Created'
+                % (newItem.title))
         return redirect(url_for('showCategories'))
     if request.method == 'GET':
         return render_template('newCatalogItem.html', categories=categories)
@@ -265,17 +277,26 @@ def editCatalogItem(category_name, item_title):
     # If user is the owner then he is allowed to edit this item
     if editedItem.user_id == login_session['user_id']:
         if request.method == 'POST':
-            if request.form['title']:
-                editedItem.title = request.form['title']
-            if request.form['description']:
-                editedItem.description = request.form['description']
             if request.form['category']:
                 category = session.query(Category).filter_by(
                     name=request.form['category']).first()
-                editedItem.category_id = category.id
-            session.add(editedItem)
-            session.commit()
-            flash('Catalog Item Successfully Edited')
+            # Edit item only if title is not already in database
+            if session.query(CatalogItem).filter_by(
+                    category_id=category.id).filter(
+                    id != editedItem.id).filter_by(
+                    title=request.form['title']).first():
+                flash('Catalog item title already exist in this \
+                    category.. record not updated')
+            else:
+                if request.form['title']:
+                    editedItem.title = request.form['title']
+                if request.form['description']:
+                    editedItem.description = request.form['description']
+                if request.form['category']:
+                    editedItem.category_id = category.id
+                session.add(editedItem)
+                session.commit()
+                flash('Catalog Item Successfully Edited')
             return redirect(url_for('showCategories'))
         if request.method == 'GET':
             return render_template(
