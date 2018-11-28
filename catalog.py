@@ -157,6 +157,10 @@ def showCategories():
     # Categories will be listed on the first column of the table,
     # items will be concatenaded with categories_with_items and listed
     # in the second column
+    if not categories_with_items:
+        flash('No categories found .. database empty')
+        if 'username' not in login_session:
+            flash('Users can add categories only if logged in .. Please login ')
     return render_template(
         'catalog.html', categories=categories, items=items,
         categories_with_items=categories_with_items)
@@ -643,12 +647,11 @@ def createUser(login_session):
 
 def getUserID(email):
     # get user_id based on its email for authentication purposes
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
     try:
-        user = session.query(User).filter_by(email=email).one()
-        return user.id
-    except DBAPIError as err:
+        user = session.query(User).filter_by(email=email).first()
+        if user:
+            return user.id
+    except exc.DBAPIError as err:
         print "Error: %s" % err
         return None
 
