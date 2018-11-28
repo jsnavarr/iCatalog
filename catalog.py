@@ -116,7 +116,7 @@ def categoryNameJSON(category_name):
     return jsonify(category=[])
 
 
-@app.route('catalog/user/JSON')
+@app.route('/catalog/user/JSON')
 # JSON APIs to view all users
 def catalogUsersJSON():
     users = session.query(User).all()
