@@ -154,13 +154,14 @@ def showCategories():
         CatalogItem.id.desc()).limit(10).all()
     # Get the category names which will be concatenated to each catalog item
     categories_with_items = getCategories(items=items)
-    # Categories will be listed on the first column of the table,
-    # items will be concatenaded with categories_with_items and listed
-    # in the second column
-    if not categories_with_items:
+    # Check if database is empty
+    if not session.query(Category).first():
         flash('No categories found .. database empty')
         if 'username' not in login_session:
             flash('Users can add categories only if logged in .. Please login ')
+    # Categories will be listed on the first column of the table,
+    # items will be concatenaded with categories_with_items and listed
+    # in the second column
     return render_template(
         'catalog.html', categories=categories, items=items,
         categories_with_items=categories_with_items)
