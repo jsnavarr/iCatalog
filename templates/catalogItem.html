@@ -43,26 +43,30 @@ This code will render a table to display a catalog item with 1 header and 2 colu
 					</div>
 					</td>
 				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="all_buttons">
+							<div class="category_buttons">
+								{%if 'username' in session %}
+								<a href="{{url_for('editCatalogItem', category_name = category_name, item_title = item.title)}}">
+									<button >Edit</button>
+								</a>
+								<a href="{{url_for('deleteCatalogItem', category_name = category_name, item_title = item.title)}}">
+									<button >Delete</button>
+								</a>	
+								<a href="{{url_for('newCatalogItem')}}">
+									<button >New</button>
+								</a>
+								{% endif %}
+								<a href="{{url_for('showCategories')}}">
+									<button>Cancel</button>
+								</a>
+							</div>
+						</div>
+					</td>
+				</tr>
 			</tbody>
 		</table>
-	</div>
-</div>
-<div class="all_buttons">
-	<div class="category_buttons">
-		{%if 'username' in session %}
-		<a href="{{url_for('editCatalogItem', category_name = category_name, item_title = item.title)}}">
-			<button >Edit</button>
-		</a>
-		<a href="{{url_for('deleteCatalogItem', category_name = category_name, item_title = item.title)}}">
-			<button >Delete</button>
-		</a>	
-		<a href="{{url_for('newCatalogItem')}}">
-			<button >New</button>
-		</a>
-		{% endif %}
-		<a href="{{url_for('showCategories')}}">
-			<button>Cancel</button>
-		</a>
 	</div>
 </div>
 {% endblock %}

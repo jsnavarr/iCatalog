@@ -1,12 +1,13 @@
 /* The main table will have a widht of 50% */
 .categories_data{
-    width: 50%;
+    width: 80%;
     margin: 100px auto 20px auto;
 }
 
 /* Style for the main table */
 .catalog_info {
     margin: 0 auto;
+    width: fit-content;
     min-height: 150px;
     border: 5px double royalblue;
     font-family: Arial, Helvetica, sans-serif;
@@ -23,12 +24,12 @@ table {
 /* One of the headers of the table which could fit the full width or just one
     column, depending of the view */
 #cat_title {
-    width: 20%;
+    width: 30%;
 }
 
 /* Second header of the table used in the main view */
 #latest_items_title {
-    width: 80%;
+    width: 70%;
 }
 
 /* Styles for the table headers */
@@ -88,17 +89,16 @@ table {
     main table */
 
 /* Width to match the table listing the categories/catalog items */
-.all_buttons {
-    width: 50%;
-    margin: 10px auto 20px auto;
-}
+ .all_buttons {
+    width: 100%;
+} 
 
 /* The buttons will be centered */
 .category_buttons {
     margin: 0 auto;
-    border: 3px double azure;
+    border: 3px double royalblue;
     text-align: center;
-    background: rgba(0, 50, 100, 0.5);
+    background: rgba(50, 50, 200, 0.5);
 }
 
 /* To eliminate the underline decoration */
@@ -109,12 +109,13 @@ table {
 /* This is used for the labels of each database field */
 .item_label {
     text-align: right;
-    width: 20%;
+    width: 30%;
 }
 
 /* This will be on the right of each database field */
-textarea, .text_item, .dropdown{
-    width: 80%;
+textarea, .text_item, .dropdown select{
+    width: 70%;
+    overflow: scroll;
 }
 
 /* Style the components where user will click or input data */

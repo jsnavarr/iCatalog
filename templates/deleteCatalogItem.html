@@ -44,15 +44,20 @@ This code will render a table to delete a catalog item with 1 header and 2 colum
 						</div>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="all_buttons">
+								<div class="category_buttons">
+									<input class="delete_data" type="submit" value = 'Delete'>
+										<a href = "{{url_for('showCategories')}}">
+											<span><input type="button" value="Cancel"></span>
+										</a>
+								</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	<div class="all_buttons">
-		<div class="category_buttons">
-			<input class="delete_data" type="submit" value = 'Delete'>
-			<a href = "{{url_for('showCategories')}}"><span>
-				<input type="button" value="Cancel"></span></a>
 		</div>
 	</div>
 </form>

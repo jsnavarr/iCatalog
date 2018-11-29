@@ -14,48 +14,64 @@ with 2 headers and 2 colums:
 {% include "header.html" %}
 <div class="categories_data">
 	<div class = "catalog_info">
-	<table>
-		<thead>
-			<th id="cat_title">Category </th>
-			<th id="latest_items_title">Catalog items</th>
-		</thead>
-		<tbody>
-			<tr class="info">
-				<td id="categogy_item_no_hover">
-					<a>{{category.name}}</a>
-				</td>
-				<td class="catalog_item">
-				{% for item in items %}
-					<a href = "{{url_for('showCatalogItemDetails', category_name=category.name, item_title = item.title)}}">
-						{{item.title}}</a>
-				{% endfor %}
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
-</div>
-<div class="all_buttons">
-	<div class="category_buttons">
-		{%if 'username' in session %}
-		<div>
-			<a href="{{url_for('editCategory', category_name = category.name)}}">
-				<button >Edit Category</button>
-			</a>
-			<a href="{{url_for('deleteCategory', category_name = category.name)}}">
-				<button >Delete Category</button>
-			</a>
-			<a href="{{url_for('newCategory')}}">
-				<button >New Category</button>
-			</a>
-		</div>
-		<a href="{{url_for('newCatalogItem')}}">
-				<button >New Catalog Item</button>
-		</a>
-		{% endif %}
-		<a href="{{url_for('showCategories')}}">
-			<button>Cancel</button>
-		</a>
+		<table>
+			<thead>
+				<th id="cat_title">Category </th>
+				<th id="latest_items_title">Catalog items</th>
+			</thead>
+			<tbody>
+				<tr class="info">
+					<td id="categogy_item_no_hover">
+						<a>{{category.name}}</a>
+					</td>
+					<td class="catalog_item">
+					{% for item in items %}
+						<a href = "{{url_for('showCatalogItemDetails', category_name=category.name, item_title = item.title)}}">
+							{{item.title}}</a>
+					{% endfor %}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="all_buttons">
+							<div class="category_buttons">
+								{%if 'username' in session %}
+								<div>
+									<a href="{{url_for('editCategory', category_name = category.name)}}">
+										<button >Edit Category</button>
+									</a>
+									<a href="{{url_for('deleteCategory', category_name = category.name)}}">
+										<button >Delete Category</button>
+									</a>
+									<a href="{{url_for('newCategory')}}">
+										<button >New Category</button>
+									</a>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="all_buttons">
+							<div class="category_buttons">
+								<div>
+								{%if 'username' in session %}
+									<a href="{{url_for('newCatalogItem')}}">
+											<button >New Catalog Item</button>
+									</a>
+								{% endif %}
+								<a href="{{url_for('showCategories')}}">
+									<button>Cancel</button>
+								</a>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 {% endblock %}

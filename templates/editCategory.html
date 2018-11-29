@@ -23,16 +23,20 @@ This code will render a table to display the category to be edited:
 						<td class="item_label">Name:</td>
 						<td><textarea name="name" rows="4" placeholder="Category Name" required>{{category.name}}</textarea></td>
 					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="all_buttons">
+								<div class="category_buttons">
+									<input type="submit" value = 'Save'>
+										<a href = "{{url_for('showCategories')}}">
+											<span><input type="button" value="Cancel"></span>
+										</a>
+								</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	<div class="all_buttons">
-		<div class="category_buttons">
-			<input type="submit" value = 'Save'>
-				<a href = "{{url_for('showCategories')}}">
-				<span>
-			<input type="button" value="Cancel"></span></a>
 		</div>
 	</div>
 </form>

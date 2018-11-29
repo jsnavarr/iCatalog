@@ -22,7 +22,7 @@ This code will render a table to create a new catalog item with 1 header and 2 c
                 <tbody>
                     <tr>
                         <td class="item_label">Name:</td>
-                        <td><input type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
+                        <td><input class="text_item" type ="text" maxlength="80" name="title" placeholder="Catalog Item Title" required></td>
                     </tr>
                     <tr>
                         <td class="item_label">Description:</td>
@@ -42,17 +42,22 @@ This code will render a table to create a new catalog item with 1 header and 2 c
                             </div>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="all_buttons">
+                                <div class="category_buttons">
+                                    <input type="submit" value = 'Save'>
+                                        <a href = "{{url_for('showCategories')}}">
+                                            <span><input type="button" value="Cancel"></span>
+                                        </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="all_buttons">
-        <div class="category_buttons">
-            <input type="submit" value = 'Save'>
-                <a href = "{{url_for('showCategories')}}">
-                <span>
-                    <input type="button" value="Cancel"></span></a>
-        </div>
   </div>
 </form>
 {% endblock %}

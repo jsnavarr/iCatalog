@@ -48,18 +48,22 @@ and latest catalog items in another
 				{% endfor %}
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2">
+					{%if 'username' in session%}
+					<div class="all_buttons">
+						<div class="category_buttons">
+							<div>
+								<a href="{{url_for('newCategory')}}">
+									<button >New Category</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
-{%if 'username' in session%}
-<div class="all_buttons">
-	<div class="category_buttons">
-		<div>
-			<a href="{{url_for('newCategory')}}">
-				<button >New Category</button>
-			</a>
-		</div>
-	</div>
-</div>
-{% endif %}
 {% endblock %}
